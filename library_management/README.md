@@ -11,6 +11,7 @@ A beginner-friendly Python command-line project for managing books, members, and
 - Borrow, return, renew, and track loan history
 - Overdue-loan detection and automatic late fines
 - Statistics, popular-book reports, and CSV exports
+- FIFO reservations and waitlists with expiration and audit history
 - Save data automatically in `library_data.json`
 - Unit tests using Python's standard library
 
@@ -29,7 +30,7 @@ python -m unittest -v
 ```
 
 The test suite covers persistence, validation, multiple copies, overdue fines,
-renewals, reports, and CSV exports.
+renewals, reports, CSV exports, reservations, waitlists, expiration, and audit history.
 
 ## Run the Java version
 
