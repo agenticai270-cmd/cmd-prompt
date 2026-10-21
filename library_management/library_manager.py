@@ -973,6 +973,111 @@ Library Management System
                 print("Please choose a number from 1 to 16.")
         except (ValueError, json.JSONDecodeError) as error:
             print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
 
 if __name__ == "__main__":
     run_cli()
