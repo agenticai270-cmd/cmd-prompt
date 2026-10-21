@@ -422,5 +422,518 @@ Library Management System
             print(f"Error: {error}")
 
 
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
+    while True:
+        print(menu)
+        choice = input("Choose an option: ").strip()
+        try:
+            if choice == "1":
+                book = library.add_book(input("Title: "), input("Author: "), int(input("Year: ")),
+                                        input("Category: ") or "General", int(input("Copies: ") or "1"))
+                print(f"Added book #{book.book_id}.")
+            elif choice == "2":
+                display_books(library, input("Search: "))
+            elif choice == "3":
+                member = library.register_member(input("Name: "), input("Email: "),
+                                                 input("Role [member]: ") or "member")
+                print(f"Registered member #{member.member_id}.")
+            elif choice == "4":
+                for member in library.search_members(input("Search: ")):
+                    print(f"#{member.member_id} | {member.name} | {member.email} | {member.role}")
+            elif choice == "5":
+                loan = library.borrow_book(int(input("Book ID: ")), int(input("Member ID: ")))
+                print(f"Loan #{loan.loan_id} created; due {loan.due_on}.")
+            elif choice == "6":
+                loan = library.return_book(int(input("Book ID: ")))
+                print(f"Book returned. Fine: ${loan.fine:.2f}")
+            elif choice == "7":
+                library.update_book(int(input("Book ID: ")), title=input("New title: "))
+                print("Book updated.")
+            elif choice == "8":
+                library.remove_book(int(input("Book ID: ")))
+                print("Book removed.")
+            elif choice == "9":
+                library.update_member(int(input("Member ID: ")), name=input("New name: "))
+                print("Member updated.")
+            elif choice == "10":
+                library.remove_member(int(input("Member ID: ")))
+                print("Member removed.")
+            elif choice == "11":
+                loan = library.renew_loan(int(input("Loan ID: ")), int(input("Extra days: ")))
+                print(f"Loan renewed until {loan.due_on}.")
+            elif choice == "12":
+                for loan in library.overdue_loans():
+                    print(f"Loan #{loan.loan_id}: book #{loan.book_id}, member #{loan.member_id}, due {loan.due_on}")
+            elif choice == "13":
+                display_statistics(library)
+            elif choice == "14":
+                library.export_books_csv("books.csv")
+                library.export_loans_csv("loans.csv")
+                print("Exported books.csv and loans.csv.")
+            elif choice == "15":
+                print("Categories: " + ", ".join(library.categories()))
+            elif choice == "16":
+                print("Goodbye!")
+                break
+            else:
+                print("Please choose a number from 1 to 16.")
+        except (ValueError, json.JSONDecodeError) as error:
+            print(f"Error: {error}")
+
 if __name__ == "__main__":
     run_cli()
