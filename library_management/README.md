@@ -23,3 +23,13 @@ python library_manager.py
 cd library_management
 python -m unittest -v
 ```
+
+## Run the Java version
+
+The Java implementation is provided in `LibraryManager.java`.
+
+```bash
+cd library_management
+javac LibraryManager.java
+java LibraryManager
+```
