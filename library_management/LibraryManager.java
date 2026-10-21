@@ -163,4 +163,3 @@ public class LibraryManager {
         return scanner.nextLine().trim();
     }
 }
-printf("hello");
