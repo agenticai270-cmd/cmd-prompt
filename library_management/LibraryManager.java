@@ -1,14 +1,22 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /** A simple command-line library management system in Java. */
 public class LibraryManager {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final Path DATA_FILE = Path.of("library_data_java.bin");
     private static final List<Book> books = new ArrayList<>();
     private static final List<Member> members = new ArrayList<>();
 
-    private static class Book {
+    private static class Book implements Serializable {
+        private static final long serialVersionUID = 1L;
         int id;
         String title;
         String author;
@@ -23,7 +31,8 @@ public class LibraryManager {
         }
     }
 
-    private static class Member {
+    private static class Member implements Serializable {
+        private static final long serialVersionUID = 1L;
         int id;
         String name;
         String email;
@@ -36,6 +45,7 @@ public class LibraryManager {
     }
 
     public static void main(String[] args) {
+        loadData();
         while (true) {
             printMenu();
             String choice = scanner.nextLine().trim();
@@ -55,6 +65,8 @@ public class LibraryManager {
                 }
             } catch (IllegalArgumentException error) {
                 System.out.println("Error: " + error.getMessage());
+            } catch (IllegalStateException error) {
+                System.out.println("Storage error: " + error.getMessage());
             }
         }
     }
@@ -80,6 +92,7 @@ public class LibraryManager {
         }
         Book book = new Book(books.size() + 1, title, author, year);
         books.add(book);
+        saveData();
         System.out.println("Added book #" + book.id + ".");
     }
 
@@ -111,6 +124,7 @@ public class LibraryManager {
         }
         Member member = new Member(members.size() + 1, name, email);
         members.add(member);
+        saveData();
         System.out.println("Registered member #" + member.id + ".");
     }
 
@@ -132,6 +146,7 @@ public class LibraryManager {
             throw new IllegalArgumentException("Book is already borrowed.");
         }
         book.borrowedBy = memberId;
+        saveData();
         System.out.println("Book borrowed successfully.");
     }
 
@@ -141,7 +156,33 @@ public class LibraryManager {
             throw new IllegalArgumentException("Book is not currently borrowed.");
         }
         book.borrowedBy = null;
+        saveData();
         System.out.println("Book returned successfully.");
+    }
+
+    private static void loadData() {
+        if (!Files.exists(DATA_FILE)) {
+            return;
+        }
+        try (ObjectInputStream input = new ObjectInputStream(Files.newInputStream(DATA_FILE))) {
+            @SuppressWarnings("unchecked")
+            List<Book> savedBooks = (List<Book>) input.readObject();
+            @SuppressWarnings("unchecked")
+            List<Member> savedMembers = (List<Member>) input.readObject();
+            books.addAll(savedBooks);
+            members.addAll(savedMembers);
+        } catch (IOException | ClassNotFoundException | ClassCastException error) {
+            System.out.println("Could not load saved data: " + error.getMessage());
+        }
+    }
+
+    private static void saveData() {
+        try (ObjectOutputStream output = new ObjectOutputStream(Files.newOutputStream(DATA_FILE))) {
+            output.writeObject(books);
+            output.writeObject(members);
+        } catch (IOException error) {
+            throw new IllegalStateException("Could not save data to " + DATA_FILE, error);
+        }
     }
 
     private static Book findBook(int id) {

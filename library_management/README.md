@@ -33,3 +33,5 @@ cd library_management
 javac LibraryManager.java
 java LibraryManager
 ```
+
+The Java version automatically saves its data in `library_data_java.bin`.
