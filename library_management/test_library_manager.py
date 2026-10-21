@@ -23,6 +23,25 @@ class LibraryTests(unittest.TestCase):
         self.assertEqual(loaded.books[self.book.book_id].category, "Science Fiction")
         self.assertEqual(loaded.books[self.book.book_id].copies, 2)
 
+    def test_legacy_borrowed_by_is_migrated_to_open_loan(self) -> None:
+        legacy_file = Path(self.temp_dir.name) / "legacy.json"
+        legacy_file.write_text(
+            '{"books": [{"book_id": 1, "title": "Dune", '
+            '"author": "Frank Herbert", "year": 1965, "borrowed_by": 7}], '
+            '"members": [{"member_id": 7, "name": "Asha", '
+            '"email": "asha@example.com"}]}',
+            encoding="utf-8",
+        )
+        migrated = Library(legacy_file)
+        open_loans = [loan for loan in migrated.loans.values() if loan.is_open]
+        self.assertEqual(len(open_loans), 1)
+        self.assertEqual(open_loans[0].book_id, 1)
+        self.assertEqual(open_loans[0].member_id, 7)
+
+        returned = migrated.return_book(1)
+        self.assertIsNotNone(returned.returned_on)
+        self.assertEqual(migrated.books[1].available_copies, 1)
+
     def test_multiple_copies_can_be_borrowed(self) -> None:
         first = self.library.borrow_book(self.book.book_id, self.member.member_id)
         second_member = self.library.register_member("Ravi", "ravi@example.com")

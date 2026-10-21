@@ -63,9 +63,10 @@ class Library:
             return
         with self.data_file.open("r", encoding="utf-8") as file:
             data = json.load(file)
+        legacy_books = data.get("books", [])
         self.books = {
             int(item["book_id"]): self._book_from_dict(item)
-            for item in data.get("books", [])
+            for item in legacy_books
         }
         self.members = {
             int(item["member_id"]): Member(**item)
@@ -75,6 +76,44 @@ class Library:
             int(item["loan_id"]): Loan(**item)
             for item in data.get("loans", [])
         }
+        self._migrate_legacy_loans(legacy_books)
+
+    def _migrate_legacy_loans(self, legacy_books: list[dict[str, Any]]) -> None:
+        """Convert the original ``borrowed_by`` field into an open loan.
+
+        The first version stored only one borrower directly on a book.  The
+        current format stores loan history separately, so preserve that
+        relationship during the first load after upgrading.
+        """
+        migrated = False
+        today = date.today()
+        for item in legacy_books:
+            borrowed_by = item.get("borrowed_by")
+            if borrowed_by is None:
+                continue
+            book_id = int(item["book_id"])
+            member_id = int(borrowed_by)
+            if book_id not in self.books or member_id not in self.members:
+                continue
+            already_migrated = any(
+                loan.book_id == book_id
+                and loan.member_id == member_id
+                and loan.is_open
+                for loan in self.loans.values()
+            )
+            if already_migrated:
+                continue
+            loan = Loan(
+                loan_id=self._next_id(self.loans),
+                book_id=book_id,
+                member_id=member_id,
+                borrowed_on=today.isoformat(),
+                due_on=(today + timedelta(days=DEFAULT_LOAN_DAYS)).isoformat(),
+            )
+            self.loans[loan.loan_id] = loan
+            migrated = True
+        if migrated:
+            self.save()
 
     @staticmethod
     def _book_from_dict(item: dict[str, Any]) -> Book:
