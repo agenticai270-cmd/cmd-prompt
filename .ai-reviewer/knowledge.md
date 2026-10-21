@@ -2,30 +2,31 @@
 
 ## Architecture
 
-A beginner-friendly Python CLI for managing books, members, and borrowing records. Core domain logic lives in `library_management/library_manager.py`, with `Library` owning in-memory state and JSON persistence; the same file contains CLI presentation and input handling. Tests in `library_management/test_library_manager.py` use only Python’s standard `unittest` and temporary JSON files.
+This is a beginner-friendly library-management CLI with parallel Python and Java implementations under `library_management/`. The Python implementation is the feature-rich version: `Library` owns books, members, loans, validation, reporting, CSV export, and JSON persistence in `library_manager.py`. The Java implementation is a smaller standalone CLI using serializable lists and `library_data_java.bin`; it is not a direct feature-for-feature equivalent.
 
 ## Conventions
 
-- Use dataclasses for persisted domain entities: `Book` and `Member` in `library_management/library_manager.py`; serialize them with `dataclasses.asdict`.
-- Keep books and members indexed by integer IDs in dictionaries (`dict[int, Book]` and `dict[int, Member]`), while JSON stores lists and converts IDs back to integers in `_load()`.
-- Domain operations validate inputs and raise `ValueError` with user-facing messages. Examples include required text checks in `add_book()` and `register_member()`, and existence/state checks in `borrow_book()` and `return_book()`.
-- Normalize user-provided text at the boundary with `.strip()`. Book searches additionally lowercase both query and searchable fields (`search_books()`).
-- Mutating operations persist immediately by calling `self.save()` after successful changes. New persistence paths are created with `mkdir(parents=True, exist_ok=True)`.
-- Keep CLI interaction in `run_cli()` and presentation helpers such as `display_books()`, while library behavior remains callable independently for tests.
-- Tests construct `Library` with a temporary path (`test_library_manager.py`) rather than using the default `library_data.json`; follow this pattern to avoid filesystem pollution.
-- Use standard-library typing and modern annotations, including `from __future__ import annotations` and `int | None`.
+- Python domain entities are `@dataclass` records: `Book`, `Member`, and `Loan` in `library_management/library_manager.py`.
+- Python IDs are integer dictionary keys generated with `_next_id`, using `max(items, default=0) + 1`; operations resolve missing entities through `_require_book` and `_require_member`.
+- Mutating Python operations validate inputs, update in-memory state, call `save()`, and return the affected entity where applicable. Examples include `add_book`, `update_member`, `borrow_book`, and `return_book`.
+- Persistence is JSON-backed and versioned (`"version": 2`); writes use a sibling `.tmp` file followed by `replace()` for safer replacement (`library_manager.py`).
+- Dates are persisted as ISO strings and converted with `date.fromisoformat`; loan date inputs remain injectable for deterministic tests (`borrowed_on` and `returned_on`).
+- Book inventory tracks both total `copies` and `available_copies`. Updating copies must preserve the number currently borrowed; removing books or members is blocked when active loans exist.
+- Validation uses `ValueError` with user-facing messages, including required text via `_text`, positive quantities via `_positive`, and explicit role/email checks (`library_manager.py`).
+- Tests use Python’s standard `unittest`, temporary directories, and regex assertions on validation messages (`library_management/test_library_manager.py`).
+- The Python CLI is run from the `library_management` directory; the Java version is compiled and run independently as documented in `library_management/README.md`.
 
 ## Intentional non-standard choices
 
-- Persistence is deliberately simple JSON rather than a database. The default file is relative to the process working directory (`library_data.json`), as documented in `library_management/README.md`.
-- `Library` auto-loads in `__init__` and auto-saves every successful mutation; callers do not need an explicit transaction or save step.
-- CLI and domain code share one module; this is intentional for the small beginner-focused application.
-- The CLI catches both validation/input `ValueError` and malformed JSON (`json.JSONDecodeError`) and prints an error instead of terminating.
+- The Java implementation intentionally remains a simpler legacy-style feature set: one borrower per book, no loan history, roles, fines, renewals, categories, reports, or CSV export (`library_management/LibraryManager.java`). Do not flag its lack of parity with Python unless the change explicitly targets parity.
+- Python saves after nearly every mutation and also saves after legacy migration; this is deliberate automatic persistence rather than a separate transaction layer.
+- Legacy JSON containing a book-level `borrowed_by` field is intentionally migrated into an open `Loan` (`_migrate_legacy_loans`), preserving compatibility with older data.
 
 ## Watch out for
 
-- Do not bypass validation or mutate `books`, `members`, or `borrowed_by` without saving; that breaks the persistence contract.
-- Preserve the distinction between missing IDs and invalid borrowing state, since tests and CLI messages rely on the specific `ValueError` cases.
-- When changing JSON fields or dataclasses, update both `_load()` reconstruction and `save()` serialization, plus persistence tests.
-- Avoid using the default data file in tests; use `TemporaryDirectory` as in `test_library_manager.py`.
-- Be careful with truthiness checks for IDs or state display: `display_books()` uses `if book.borrowed_by`; current IDs start at 1, so changing ID semantics could make this incorrect.
+- Changes to loan state must keep `Book.available_copies` synchronized with open loans; borrowing decrements it and returning increments it.
+- Do not bypass validation or persistence in new mutating `Library` methods.
+- Preserve migration behavior for old records lacking `category`, `copies`, or `available_copies`, and avoid creating duplicate open loans during repeated loads.
+- Be careful when changing copy counts: `update_book` rejects totals below currently borrowed copies.
+- Tests and callers may depend on exact or partial error text such as `"not available"`, `"active loans"`, `"inactive"`, and `"Email"` (`test_library_manager.py`).
+- Avoid treating the Java serialized file and Python JSON file as interchangeable; they are separate formats and paths.
